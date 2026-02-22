@@ -1,6 +1,6 @@
-font-size = 20
+theme = Rose Pine
+font-family = "JetBrains Mono"
+font-size = 14
+font-feature = calt
 window-padding-x = 10
 window-padding-y = 10
-shell-integration-features = no-cursor
-cursor-style = block
-cursor-style-blink = false
