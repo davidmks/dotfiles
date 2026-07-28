@@ -82,11 +82,12 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+export VISUAL="$EDITOR"
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -107,4 +108,31 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="$HOME/.local/bin:$PATH"
 
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+# enable vim mode
+bindkey -v
+
+# keymap for tmux sessionizer
 bindkey -s ^f "tmux-sessionizer\n"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# direnv - auto-load .env files
+eval "$(direnv hook zsh)"
+
+# Go binaries
+export PATH="$HOME/go/bin:$PATH"
+
+# Ensure Ghostty terminfo is available (needed for tmux)
+if [[ "$TERM" == *ghostty* ]] && ! infocmp xterm-ghostty &>/dev/null; then
+  app_terminfo="/Applications/Ghostty.app/Contents/Resources/terminfo"
+  if [[ -d "$app_terminfo" ]]; then
+    cp -r "$app_terminfo"/* ~/.terminfo/ 2>/dev/null
+  fi
+fi
