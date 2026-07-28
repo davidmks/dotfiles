@@ -8,7 +8,6 @@ Personal dotfiles for macOS.
 - **zsh** — `.zshrc` (oh-my-zsh)
 - **tmux** — `.tmux.conf`
 - **ghostty** — `ghostty/config`
-- **alacritty** — `alacritty/alacritty.toml`
 - **Brewfile** — Homebrew packages, casks, and Go tools
 
 ## Setup

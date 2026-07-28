@@ -105,8 +105,6 @@ brew "yarn"
 brew "yq"
 # General-purpose lossless data-compression library
 brew "zlib"
-# GPU-accelerated terminal emulator
-cask "alacritty"
 # E-books management software
 cask "calibre"
 # OpenAI's official ChatGPT desktop app

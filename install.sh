@@ -24,7 +24,6 @@ link .zshrc ~/.zshrc
 link .zprofile ~/.zprofile
 link .tmux.conf ~/.tmux.conf
 link ghostty/config ~/.config/ghostty/config
-link alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 link gh/config.yml ~/.config/gh/config.yml
 link gh-dash/config.yml ~/.config/gh-dash/config.yml
 link sarj/config.toml ~/.config/sarj/config.toml
