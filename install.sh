@@ -39,6 +39,7 @@ fi
 
 if command -v brew &>/dev/null; then
   echo "==> Installing Homebrew packages"
+  brew trust davidmks/tap 2>/dev/null || true
   brew bundle --file="$DOTFILES/Brewfile"
 else
   echo "==> Homebrew not found, skipping brew bundle"
