@@ -1,0 +1,17 @@
+worktree_base = "~/wt/{{.RepoName}}"
+auto_attach = true
+
+[tmux]
+enabled = true
+
+[[tmux.windows]]
+name = "terminal"
+command = ""
+
+[[tmux.windows]]
+name = "claude"
+command = "claude"
+
+[[tmux.windows]]
+name = "nvim"
+command = "nvim ."

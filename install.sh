@@ -21,9 +21,14 @@ echo "==> Symlinking dotfiles"
 link .gitconfig ~/.gitconfig
 link .gitignore_global ~/.gitignore_global
 link .zshrc ~/.zshrc
+link .zprofile ~/.zprofile
 link .tmux.conf ~/.tmux.conf
 link ghostty/config ~/.config/ghostty/config
 link alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+link gh/config.yml ~/.config/gh/config.yml
+link gh-dash/config.yml ~/.config/gh-dash/config.yml
+link sarj/config.toml ~/.config/sarj/config.toml
+link tmux-sessionizer/tmux-sessionizer.conf ~/.config/tmux-sessionizer/tmux-sessionizer.conf
 
 if command -v brew &>/dev/null; then
   echo "==> Installing Homebrew packages"
