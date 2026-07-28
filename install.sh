@@ -29,6 +29,14 @@ link gh-dash/config.yml ~/.config/gh-dash/config.yml
 link sarj/config.toml ~/.config/sarj/config.toml
 link tmux-sessionizer/tmux-sessionizer.conf ~/.config/tmux-sessionizer/tmux-sessionizer.conf
 
+echo "==> Neovim config"
+NVIM_CONFIG=~/.config/nvim
+if [ -d "$NVIM_CONFIG" ]; then
+  echo "$NVIM_CONFIG already exists, leaving it alone"
+else
+  git clone git@github.com:davidmks/nvim-config.git "$NVIM_CONFIG"
+fi
+
 if command -v brew &>/dev/null; then
   echo "==> Installing Homebrew packages"
   brew bundle --file="$DOTFILES/Brewfile"
