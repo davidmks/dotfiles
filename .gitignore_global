@@ -22,3 +22,10 @@ node_modules/
 __pycache__/
 *.pyc
 .venv/
+
+# Per-user local overrides (sarj's own convention: .sarj.toml is
+# team-shared and committed, .sarj.local.toml is per-user and not)
+.sarj.local.toml
+
+# Claude Code local settings (personal, never shared)
+**/.claude/settings.local.json
