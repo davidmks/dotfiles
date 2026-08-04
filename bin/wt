@@ -37,6 +37,24 @@ enter_session() {
 	fi
 }
 
+# The first sarj config that defines windows wins outright, and without
+# {{.Args}} the ticket reaches Claude nowhere and nothing reports it.
+require_args_placeholder() {
+	local main config
+	main=$(git worktree list --porcelain 2>/dev/null | awk '/^worktree /{print substr($0, 10); exit}')
+	[ -n "$main" ] || return 0
+	for config in "$main/.sarj.local.toml" "$main/.sarj.toml" \
+		"${XDG_CONFIG_HOME:-$HOME/.config}/sarj/config.toml"; do
+		[ -f "$config" ] || continue
+		grep -qF '[[tmux.windows]]' "$config" || continue
+		if grep -qF '{{.Args}}' "$config"; then
+			return 0
+		fi
+		die "$config defines tmux windows but no {{.Args}}, so the ticket would never reach Claude. Add {{.Args}} to its claude window command."
+	done
+	return 0
+}
+
 # Match on the id, not the name: the planning session renames the branch.
 if [ -n "$id" ]; then
 	found=$(sarj list -o json | jq -r --arg id "$id" '
@@ -56,6 +74,8 @@ if [ -n "$id" ]; then
 		exit 0
 	fi
 fi
+
+require_args_placeholder
 
 set --
 if [ -n "$id" ]; then set -- "$id"; fi
