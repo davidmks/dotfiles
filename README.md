@@ -9,7 +9,6 @@ Personal dotfiles for macOS.
 - **tmux** — `.tmux.conf`
 - **ghostty** — `ghostty/config`
 - **gh** — `gh/config.yml` (not `hosts.yml`, that's auth state, regenerate with `gh auth login`)
-- **gh-dash** — `gh-dash/config.yml`
 - **sarj** — `sarj/config.toml`
 - **tmux-sessionizer** — `tmux-sessionizer/tmux-sessionizer.conf`
 - **bin** — `bin/wt`, symlinked into `~/.local/bin`. `wt <ticket-url-or-id>` creates or reopens a worktree for a ticket and drops you into Claude planning it.
