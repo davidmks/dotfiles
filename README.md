@@ -12,6 +12,7 @@ Personal dotfiles for macOS.
 - **gh-dash** — `gh-dash/config.yml`
 - **sarj** — `sarj/config.toml`
 - **tmux-sessionizer** — `tmux-sessionizer/tmux-sessionizer.conf`
+- **bin** — `bin/wt`, symlinked into `~/.local/bin`. `wt <ticket-url-or-id>` creates or reopens a worktree for a ticket and drops you into Claude planning it.
 - **claude** — `claude/CLAUDE.md`, `claude/settings.json`, and `claude/skills/`, symlinked into `~/.claude`. Kept here because `~/.claude` is not a git repo and holds ~270 MB of transcripts and caches you'd never want to version.
 - **Brewfile** — Homebrew packages, casks, and Go tools
 

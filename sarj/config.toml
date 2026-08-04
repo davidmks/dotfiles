@@ -10,7 +10,8 @@ command = ""
 
 [[tmux.windows]]
 name = "claude"
-command = "claude"
+command = "claude {{.Args}}"
+focus = true
 
 [[tmux.windows]]
 name = "nvim"

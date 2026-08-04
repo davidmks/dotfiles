@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# wt <ticket-url-or-id> [-b base]
+# Start or resume work on a ticket: worktree, tmux session, Claude reading it.
+
+set -euo pipefail
+
+die() {
+	printf 'wt: %s\n' "$*" >&2
+	exit 1
+}
+
+[ $# -ge 1 ] || die "usage: wt <ticket-url-or-id> [-b base]"
+ticket=$1
+shift
+
+base=""
+while [ $# -gt 0 ]; do
+	case $1 in
+	-b | --base)
+		[ $# -ge 2 ] || die "-b needs a branch name"
+		base=$2
+		shift 2
+		;;
+	*) die "unexpected argument: $1" ;;
+	esac
+done
+
+command -v jq >/dev/null || die "jq is required"
+
+id=$(printf '%s' "$ticket" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
+
+enter_session() {
+	if [ -n "${TMUX:-}" ]; then
+		tmux switch-client -t "$1"
+	else
+		tmux attach -t "$1"
+	fi
+}
+
+# Match on the id, not the name: the planning session renames the branch.
+if [ -n "$id" ]; then
+	found=$(sarj list -o json | jq -r --arg id "$id" '
+		map(select(((.branch // "") + " " + (.name // "")) | contains($id)))
+		| first
+		| select(. != null)
+		| [.branch, (.tmux.session // ""), ((.tmux.active // false) | tostring)]
+		| @tsv
+	')
+	if [ -n "$found" ]; then
+		IFS=$'\t' read -r branch session active <<<"$found"
+		if [ "$active" = true ]; then
+			enter_session "$session"
+		else
+			sarj create "$branch" --reuse-existing
+		fi
+		exit 0
+	fi
+fi
+
+set --
+if [ -n "$id" ]; then set -- "$id"; fi
+if [ -n "$base" ]; then set -- "$@" --base "$base"; fi
+sarj create "$@" --args "/start-ticket $ticket"
