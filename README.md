@@ -12,6 +12,7 @@ Personal dotfiles for macOS.
 - **gh-dash** — `gh-dash/config.yml`
 - **sarj** — `sarj/config.toml`
 - **tmux-sessionizer** — `tmux-sessionizer/tmux-sessionizer.conf`
+- **claude** — `claude/CLAUDE.md`, `claude/settings.json`, and `claude/skills/`, symlinked into `~/.claude`. Kept here because `~/.claude` is not a git repo and holds ~270 MB of transcripts and caches you'd never want to version.
 - **Brewfile** — Homebrew packages, casks, and Go tools
 
 Neovim config is separate: [nvim-config](https://github.com/davidmks/nvim-config), cloned into `~/.config/nvim` by `install.sh`.

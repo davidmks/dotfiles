@@ -28,6 +28,9 @@ link gh/config.yml ~/.config/gh/config.yml
 link gh-dash/config.yml ~/.config/gh-dash/config.yml
 link sarj/config.toml ~/.config/sarj/config.toml
 link tmux-sessionizer/tmux-sessionizer.conf ~/.config/tmux-sessionizer/tmux-sessionizer.conf
+link claude/CLAUDE.md ~/.claude/CLAUDE.md
+link claude/settings.json ~/.claude/settings.json
+link claude/skills ~/.claude/skills
 
 echo "==> Neovim config"
 NVIM_CONFIG=~/.config/nvim
