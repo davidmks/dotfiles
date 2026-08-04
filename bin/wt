@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# wt <ticket-url-or-id> [-b base]
-# Start or resume work on a ticket: worktree, tmux session, Claude reading it.
+# wt <ticket-url-or-id> [-b base] [-n]
+# Start or resume a ticket: worktree, tmux session, Claude reading it. -n skips attaching.
 
 set -euo pipefail
 
@@ -14,12 +14,18 @@ ticket=$1
 shift
 
 base=""
+# Nothing to attach to without a terminal, so an agent running this stays put.
+[ -t 1 ] && attach=1 || attach=0
 while [ $# -gt 0 ]; do
 	case $1 in
 	-b | --base)
 		[ $# -ge 2 ] || die "-b needs a branch name"
 		base=$2
 		shift 2
+		;;
+	--no-attach)
+		attach=0
+		shift
 		;;
 	*) die "unexpected argument: $1" ;;
 	esac
@@ -67,9 +73,15 @@ if [ -n "$id" ]; then
 	if [ -n "$found" ]; then
 		IFS=$'\t' read -r branch session active <<<"$found"
 		if [ "$active" = true ]; then
-			enter_session "$session"
-		else
+			if [ "$attach" = 1 ]; then
+				enter_session "$session"
+			else
+				printf 'wt: %s already running in session %s\n' "$id" "$session"
+			fi
+		elif [ "$attach" = 1 ]; then
 			sarj create "$branch" --reuse-existing
+		else
+			sarj create "$branch" --reuse-existing --no-attach
 		fi
 		exit 0
 	fi
@@ -80,4 +92,5 @@ require_args_placeholder
 set --
 if [ -n "$id" ]; then set -- "$id"; fi
 if [ -n "$base" ]; then set -- "$@" --base "$base"; fi
+if [ "$attach" = 0 ]; then set -- "$@" --no-attach; fi
 sarj create "$@" --args "/start-ticket $ticket"
