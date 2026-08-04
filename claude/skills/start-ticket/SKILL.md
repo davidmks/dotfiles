@@ -1,6 +1,6 @@
 ---
 name: start-ticket
-description: Read a Notion ticket and explain it in plain language. Use when the user runs /start-ticket with a ticket URL or ID, or asks what a ticket is about. Explaining only — planning and branch naming live in plan-ticket.
+description: Read a Notion ticket and explain it in plain language. Use when the user runs /start-ticket with a ticket URL or ID, or asks what a ticket is about. Explaining only — it does not plan or write code.
 argument-hint: "<notion-url-or-ticket-id>"
 allowed-tools: "mcp__claude_ai_Notion__notion-fetch mcp__claude_ai_Notion__notion-search mcp__claude_ai_Notion__notion-get-comments"
 disallowed-tools: "Edit Write NotebookEdit"
@@ -9,9 +9,6 @@ disallowed-tools: "Edit Write NotebookEdit"
 # Read a ticket
 
 **Input**: `$ARGUMENTS` — Notion ticket URL or ID (e.g. `GEN-14742`).
-
-`wt` opens this session in a fresh worktree named after the ticket ID, so this often runs before anyone
-has decided whether the work is worth doing at all.
 
 ## Steps
 
@@ -36,5 +33,4 @@ Write a concise bullet list in plain, human language: what is being asked, why i
 touches. Explain any domain term the ticket takes for granted. Where the ticket is vague, silent, or
 contradicts its own comments, say so instead of smoothing it over.
 
-Then stop. Do not research the codebase, write a plan, or name a branch — `/plan-ticket` does that when
-the user asks for it.
+Stop there. End the turn and wait. Do not research the codebase, plan, or touch any file.
