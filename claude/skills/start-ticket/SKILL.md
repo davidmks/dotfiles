@@ -1,6 +1,7 @@
 ---
 name: start-ticket
 description: Read a Notion ticket and explain it in plain language. Use when the user runs /start-ticket with a ticket URL or ID, or asks what a ticket is about. Explaining only — it does not plan or write code.
+disable-model-invocation: true
 argument-hint: "<notion-url-or-ticket-id>"
 allowed-tools: "mcp__claude_ai_Notion__notion-fetch mcp__claude_ai_Notion__notion-search mcp__claude_ai_Notion__notion-get-comments"
 disallowed-tools: "Edit Write NotebookEdit"
