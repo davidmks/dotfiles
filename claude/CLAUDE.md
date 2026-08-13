@@ -4,13 +4,20 @@
 
 Applies to all output, not just code and comments.
 
-- Plain, everyday language.
-- Short sentences.
-- Say it the obvious way, not the clever way.
-- Don't try to sound smart, just say things simply.
-- Stop once the point is clear.
+- Plain, everyday language. Say it the obvious way, not the clever way.
+- Short sentences. Stop once the point is clear.
+- Clarity beats brevity. Stop when it can't be misread, not when it's shortest.
 - Avoid jargon; if a domain term is needed, explain it once in plain words.
+
+These are mechanical. Check them every time:
+
 - Never use the em dash character. Use a comma, period, colon, or hyphen instead.
+- Never weaken or strengthen a hedge: "may have failed" does not become "failed".
+- Active voice, name the actor: "the agent deletes the file", not "the file is deleted".
+- Use the verb, not the noun form: "analyze the log", not "perform an analysis of the log".
+- Plain verbs, not phrasal ones: start, contact, read. Not spin up, reach out, dive into.
+- No marketing adjectives: seamless, robust, powerful, blazing-fast. Delete them, or give the number.
+- One name per thing. Don't rotate check/verify/confirm for the same action.
 
 ## Commits
 
