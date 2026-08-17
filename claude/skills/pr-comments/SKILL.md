@@ -1,13 +1,11 @@
 ---
 name: pr-comments
 description: >-
-  Read the review comments left on a PR by bots and colleagues, judge each one
-  against the actual code, and report which are worth acting on. Use whenever the
-  user asks about feedback on their PR — "check the PR comments", "did the bots
-  find anything", "any review feedback", "address the comments", "what did
-  CodeRabbit/Sourcery/Copilot say" — even if they don't name the skill. This is
-  for reacting to what other people said; use quick-review instead when the user
-  wants your own fresh opinion on the diff.
+  Read the review comments bots and colleagues left on a PR, judge each claim
+  against the code, and report what is worth acting on before changing anything.
+  Reacting to what others said — use quick-review for a fresh opinion on the diff.
+disable-model-invocation: true
+argument-hint: "[pr-number]"
 allowed-tools: "Bash Read Grep Glob Edit Write"
 ---
 
