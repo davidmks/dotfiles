@@ -1,0 +1,2 @@
+# Keeps work-specific auto-mode rules out of this public repo; install.sh configures the filter.
+claude/settings.json filter=strip-automode

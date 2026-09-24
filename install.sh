@@ -3,6 +3,12 @@ set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 
+echo "==> Configuring git filters"
+# Strips work-specific auto-mode rules from claude/settings.json on commit; see .gitattributes.
+git -C "$DOTFILES" config filter.strip-automode.clean "jq 'del(.autoMode)'"
+git -C "$DOTFILES" config filter.strip-automode.smudge cat
+git -C "$DOTFILES" config filter.strip-automode.required true
+
 link() {
   local src="$DOTFILES/$1"
   local dst="$2"
