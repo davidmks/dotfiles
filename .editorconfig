@@ -1,0 +1,12 @@
+# Read by shfmt and by editors. Shell settings follow the Google shell style guide.
+root = true
+
+[*.sh]
+indent_style = space
+indent_size = 2
+switch_case_indent = true
+binary_next_line = true
+
+[*.py]
+indent_style = space
+indent_size = 4

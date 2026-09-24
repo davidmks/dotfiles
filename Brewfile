@@ -3,6 +3,8 @@ tap "getsentry/tools"
 tap "oven-sh/bun"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
+# Shell script formatter
+brew "shfmt"
 # Static checker for GitHub Actions workflow files
 brew "actionlint"
 # General-purpose data compression with high compression ratio
