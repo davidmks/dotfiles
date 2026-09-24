@@ -129,6 +129,9 @@ eval "$(direnv hook zsh)"
 # Go binaries
 export PATH="$HOME/go/bin:$PATH"
 
+# libpq (psql, pg_dump, etc.) - keg-only via Homebrew
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
 # Ensure Ghostty terminfo is available (needed for tmux)
 if [[ "$TERM" == *ghostty* ]] && ! infocmp xterm-ghostty &>/dev/null; then
   app_terminfo="/Applications/Ghostty.app/Contents/Resources/terminfo"
