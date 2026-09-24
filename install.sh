@@ -30,6 +30,7 @@ link tmux-sessionizer/tmux-sessionizer.conf ~/.config/tmux-sessionizer/tmux-sess
 link claude/CLAUDE.md ~/.claude/CLAUDE.md
 link claude/settings.json ~/.claude/settings.json
 link claude/skills ~/.claude/skills
+link claude/hooks ~/.claude/hooks
 
 echo "==> Neovim config"
 NVIM_CONFIG=~/.config/nvim
@@ -43,6 +44,17 @@ if command -v brew &>/dev/null; then
   echo "==> Installing Homebrew packages"
   brew trust davidmks/tap 2>/dev/null || true
   brew bundle --file="$DOTFILES/Brewfile"
+
+  # macOS only grants notification permission to apps in ~/Applications, not in the Homebrew cellar.
+  notifier_source="$(brew --prefix terminal-notifier)/terminal-notifier.app"
+  notifier_app=~/Applications/terminal-notifier.app
+  if ! diff -q "$notifier_source/Contents/Info.plist" "$notifier_app/Contents/Info.plist" &>/dev/null; then
+    echo "==> Copying terminal-notifier.app to ~/Applications"
+    mkdir -p ~/Applications
+    rm -rf "$notifier_app"
+    cp -R "$notifier_source" ~/Applications/
+    echo "Allow its notifications once: open -a $notifier_app --args -message test"
+  fi
 else
   echo "==> Homebrew not found, skipping brew bundle"
 fi

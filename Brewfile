@@ -89,6 +89,8 @@ brew "ruby", link: false
 brew "semgrep"
 # Tool Command Language
 brew "tcl-tk@8"
+# Send macOS notifications from the command line
+brew "terminal-notifier"
 # Terminal multiplexer
 brew "tmux"
 # Extremely fast Python package installer and resolver, written in Rust
