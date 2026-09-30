@@ -145,6 +145,13 @@ on_blocked() {
   fi
 }
 
+# Removes an agent's state and banner when its Claude session ends.
+on_session_end() {
+  local pane="$1"
+  clear_state "${pane}"
+  clear_notification "${pane}"
+}
+
 #######################################
 # Handles the hook JSON on stdin for the pane in TMUX_PANE (unset outside tmux).
 # Always exits 0: any other code makes Claude Code show a hook error.
@@ -168,8 +175,7 @@ handle_hook() {
       on_blocked "${pane}" "$(jq -r '.message // empty' <<<"${input}")"
       ;;
     SessionEnd)
-      clear_state "${pane}"
-      clear_notification "${pane}"
+      on_session_end "${pane}"
       ;;
   esac
   return 0
