@@ -29,9 +29,13 @@
       "Bash(tree:*)"
     ],
     "deny": [
-      "Bash(gh pr comment*)",
       "Bash(gh issue comment*)",
       "Bash(gh pr review*)"
+    ],
+    "ask": [
+      "Bash(gh pr comment*)",
+      "Bash(gh api *comments*)",
+      "Bash(gh api graphql*)"
     ]
   },
   "hooks": {
@@ -53,6 +57,17 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/agent-state.sh hook",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(gh *)",
+            "command": "~/.claude/hooks/claude_comment_prefix.py",
             "timeout": 5
           }
         ]
