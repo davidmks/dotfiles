@@ -3,6 +3,37 @@
     "commit": "",
     "pr": ""
   },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(file:*)",
+      "Bash(which:*)",
+      "Bash(id:*)",
+      "Bash(whoami:*)",
+      "Bash(pwd:*)",
+      "Bash(dirname:*)",
+      "Bash(basename:*)",
+      "Bash(realpath:*)",
+      "Bash(stat:*)",
+      "Bash(du:*)",
+      "Bash(df:*)",
+      "Bash(tree:*)"
+    ],
+    "deny": [
+      "Bash(gh pr comment*)",
+      "Bash(gh issue comment*)",
+      "Bash(gh pr review*)"
+    ]
+  },
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -97,44 +128,15 @@
       }
     ]
   },
-  "permissions": {
-    "allow": [
-      "Read",
-      "Glob",
-      "Grep",
-      "Bash(grep:*)",
-      "Bash(head:*)",
-      "Bash(ls:*)",
-      "Bash(find:*)",
-      "Bash(cat:*)",
-      "Bash(tail:*)",
-      "Bash(wc:*)",
-      "Bash(file:*)",
-      "Bash(which:*)",
-      "Bash(id:*)",
-      "Bash(whoami:*)",
-      "Bash(pwd:*)",
-      "Bash(dirname:*)",
-      "Bash(basename:*)",
-      "Bash(realpath:*)",
-      "Bash(stat:*)",
-      "Bash(du:*)",
-      "Bash(df:*)",
-      "Bash(tree:*)"
-    ],
-    "deny": [
-      "Bash(gh pr comment*)",
-      "Bash(gh issue comment*)",
-      "Bash(gh pr review*)"
-    ]
-  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true
+    "playwright@claude-plugins-official": true,
+    "lizy-engineering@lizy-claude-code-plugins": true,
+    "lizy-admin@lizy-claude-code-plugins": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
