@@ -1,4 +1,4 @@
-SHELL_SCRIPTS := $(shell find . -name '*.sh' -not -path './.git/*' -not -path './claude/skills/synced/*')
+SHELL_SCRIPTS := $(shell find . -name '*.sh' -not -path './.git/*' -not -path './claude/skills/synced/*') $(wildcard bin/*)
 PYTHON_DIR := claude/hooks
 
 .PHONY: lint format test
