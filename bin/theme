@@ -23,6 +23,8 @@ THEMES="
 rose-pine|$THEMES_DIR/rose-pine|rose-pine-main|dark|#26233a|#9ccfd8
 rose-pine-dawn|$THEMES_DIR/rose-pine-dawn|rose-pine-dawn|light|#f2e9e1|#286983
 tokyonight|$THEMES_DIR/tokyonight-storm|tokyonight-storm|dark|#292e42|#7aa2f7
+tokyonight-night|$THEMES_DIR/tokyonight-night|tokyonight-night|dark|#292e42|#7aa2f7
+tokyonight-moon|$THEMES_DIR/tokyonight-moon|tokyonight-moon|dark|#2f334d|#82aaff
 tokyonight-day|$THEMES_DIR/tokyonight-day|tokyonight-day|light|#c4c8da|#2e7de9
 gruvbox|Gruvbox Dark|gruvbox|dark|#3c3836|#83a598
 gruvbox-light|Gruvbox Light|gruvbox|light|#ebdbb2|#076678
