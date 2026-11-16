@@ -7,7 +7,8 @@ Personal dotfiles for macOS.
 - **git** — `.gitconfig`, `.gitignore_global`
 - **zsh** — `.zshrc`, `.zprofile` (oh-my-zsh)
 - **tmux** — `.tmux.conf`
-- **ghostty** — `ghostty/config`
+- **ghostty** — `ghostty/config`, plus theme files in `ghostty/themes/`
+- **theme** — `bin/theme <name>` switches Ghostty, the tmux status bar, and every open Neovim to one theme. `theme --list` shows the themes. The choice lives in `~/.local/state/theme/`. To add a theme, add a line to the table in the script.
 - **gh** — `gh/config.yml` (not `hosts.yml`, that's auth state, regenerate with `gh auth login`)
 - **sarj** — `sarj/config.toml`
 - **tmux-sessionizer** — `tmux-sessionizer/tmux-sessionizer.conf`

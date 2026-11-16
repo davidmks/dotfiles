@@ -1,4 +1,7 @@
+# Fallback theme. The `theme` script writes the active one to the file below,
+# which Ghostty loads after this file, so it wins.
 theme = Rose Pine
+config-file = ?~/.local/state/theme/ghostty
 font-family = "JetBrains Mono"
 font-size = 14
 font-feature = calt

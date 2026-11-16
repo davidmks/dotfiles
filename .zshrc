@@ -107,6 +107,7 @@ export VISUAL="$EDITOR"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/dotfiles/bin:$PATH"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"

@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Switch the color theme of Ghostty, tmux and Neovim together.
+#
+#   theme            print the current theme
+#   theme --list     print the available themes
+#   theme <name>     switch to <name>
+#
+# The script writes the choice to $STATE_DIR. Ghostty includes the `ghostty`
+# file from there, and every running Neovim watches the `nvim` file and
+# switches when it changes. tmux sources the `tmux.conf` file at startup,
+# and the script reloads it in the running tmux server.
+set -euo pipefail
+
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/theme"
+DOTFILES="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+THEMES_DIR="$DOTFILES/ghostty/themes"
+
+# name | Ghostty theme (built-in name or a file in ghostty/themes) | Neovim colorscheme | background | tmux status bar bg | tmux status bar fg
+# Rose Pine and Tokyo Night use the theme authors' own Ghostty files, so the
+# terminal and Neovim come from the same palette source. The tmux colors are a
+# raised surface color and an accent from each theme's own palette.
+THEMES="
+rose-pine|$THEMES_DIR/rose-pine|rose-pine-main|dark|#26233a|#9ccfd8
+rose-pine-dawn|$THEMES_DIR/rose-pine-dawn|rose-pine-dawn|light|#f2e9e1|#286983
+tokyonight|$THEMES_DIR/tokyonight-storm|tokyonight-storm|dark|#292e42|#7aa2f7
+tokyonight-day|$THEMES_DIR/tokyonight-day|tokyonight-day|light|#c4c8da|#2e7de9
+gruvbox|Gruvbox Dark|gruvbox|dark|#3c3836|#83a598
+gruvbox-light|Gruvbox Light|gruvbox|light|#ebdbb2|#076678
+nord|Nord|nord|dark|#3b4252|#88c0d0
+"
+
+list() {
+	echo "$THEMES" | awk -F'|' 'NF { print $1 }'
+}
+
+case "${1:-}" in
+"")
+	cat "$STATE_DIR/current" 2>/dev/null || echo "no theme set"
+	exit 0
+	;;
+--list | -l)
+	list
+	exit 0
+	;;
+esac
+
+name="$1"
+row="$(echo "$THEMES" | awk -F'|' -v n="$name" '$1 == n')"
+if [ -z "$row" ]; then
+	echo "unknown theme: $name" >&2
+	echo "available: $(list | tr '\n' ' ')" >&2
+	exit 1
+fi
+IFS='|' read -r _ ghostty_theme nvim_scheme background tmux_bg tmux_fg <<<"$row"
+
+mkdir -p "$STATE_DIR"
+echo "theme = $ghostty_theme" >"$STATE_DIR/ghostty"
+echo "$nvim_scheme $background" >"$STATE_DIR/nvim"
+echo "set -g status-style 'bg=$tmux_bg fg=$tmux_fg'" >"$STATE_DIR/tmux.conf"
+echo "$name" >"$STATE_DIR/current"
+
+if pgrep -xq ghostty; then
+	# reload_config applies to the whole app, so any one terminal will do.
+	osascript -e 'tell application "Ghostty" to perform action "reload_config" on terminal 1' >/dev/null ||
+		echo "could not reload Ghostty; press cmd+shift+, to reload it by hand" >&2
+fi
+
+if tmux info >/dev/null 2>&1; then
+	tmux source-file "$STATE_DIR/tmux.conf"
+fi
+
+echo "theme: $name"
