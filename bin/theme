@@ -17,18 +17,21 @@ THEMES_DIR="$DOTFILES/ghostty/themes"
 
 # name | Ghostty theme (built-in name or a file in ghostty/themes) | Neovim colorscheme | background | tmux status bar bg | tmux status bar fg
 # Rose Pine and Tokyo Night use the theme authors' own Ghostty files, so the
-# terminal and Neovim come from the same palette source. The tmux colors are a
-# raised surface color and an accent from each theme's own palette.
+# terminal and Neovim come from the same palette source. The tmux colors come
+# from each theme's own palette: a bar color that stands out from the terminal
+# background about as much as a gray bar would, and a text color that stays
+# readable on it.
 THEMES="
-rose-pine|$THEMES_DIR/rose-pine|rose-pine-main|dark|#26233a|#9ccfd8
-rose-pine-dawn|$THEMES_DIR/rose-pine-dawn|rose-pine-dawn|light|#f2e9e1|#286983
-tokyonight-storm|$THEMES_DIR/tokyonight-storm|tokyonight-storm|dark|#292e42|#7aa2f7
-tokyonight-night|$THEMES_DIR/tokyonight-night|tokyonight-night|dark|#292e42|#7aa2f7
-tokyonight-moon|$THEMES_DIR/tokyonight-moon|tokyonight-moon|dark|#2f334d|#82aaff
-tokyonight-day|$THEMES_DIR/tokyonight-day|tokyonight-day|light|#c4c8da|#2e7de9
-gruvbox|Gruvbox Dark|gruvbox|dark|#3c3836|#83a598
-gruvbox-light|Gruvbox Light|gruvbox|light|#ebdbb2|#076678
-nord|Nord|nord|dark|#3b4252|#88c0d0
+rose-pine|$THEMES_DIR/rose-pine|rose-pine-main|dark|#403d52|#9ccfd8
+rose-pine-moon|$THEMES_DIR/rose-pine-moon|rose-pine-moon|dark|#44415a|#9ccfd8
+rose-pine-dawn|$THEMES_DIR/rose-pine-dawn|rose-pine-dawn|light|#cecacd|#575279
+tokyonight-storm|$THEMES_DIR/tokyonight-storm|tokyonight-storm|dark|#3b4261|#c0caf5
+tokyonight-night|$THEMES_DIR/tokyonight-night|tokyonight-night|dark|#3b4261|#c0caf5
+tokyonight-moon|$THEMES_DIR/tokyonight-moon|tokyonight-moon|dark|#3b4261|#c8d3f5
+tokyonight-day|$THEMES_DIR/tokyonight-day|tokyonight-day|light|#c4c8da|#3760bf
+gruvbox|Gruvbox Dark|gruvbox|dark|#504945|#ebdbb2
+gruvbox-light|Gruvbox Light|gruvbox|light|#d5c4a1|#3c3836
+nord|Nord|nord|dark|#434c5e|#d8dee9
 "
 
 list() {
