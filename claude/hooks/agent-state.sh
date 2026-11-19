@@ -150,6 +150,16 @@ on_session_end() {
   local pane="$1"
   clear_state "${pane}"
   clear_notification "${pane}"
+  tmux set-option -pu -t "${pane}" @claude_session_id &>/dev/null || true
+}
+
+# Stores the Claude conversation ID on the pane for bin/tmux-claude-save-sessions.
+remember_session() {
+  local pane="$1" input="$2" session_id
+  session_id="$(jq -r '.session_id // empty' <<<"${input}")"
+  if [[ -n "${session_id}" ]]; then
+    tmux set-option -p -t "${pane}" @claude_session_id "${session_id}" &>/dev/null || true
+  fi
 }
 
 #######################################
@@ -163,6 +173,7 @@ handle_hook() {
   fi
   input="$(cat)"
   event="$(jq -r '.hook_event_name // empty' <<<"${input}")"
+  remember_session "${pane}" "${input}"
 
   case "${event}" in
     UserPromptSubmit | PreToolUse | PostToolUse | PostToolUseFailure)
