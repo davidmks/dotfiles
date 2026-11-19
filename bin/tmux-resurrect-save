@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Runs one tmux-resurrect save at a time. Continuum can start two saves in the same second;
+# they share a file name, and the second one deletes the file that `last` points to.
+set -euo pipefail
+
+lock_dir="${TMPDIR:-/tmp}/tmux-resurrect-save-$(tmux display-message -p '#{pid}')"
+# A save takes seconds; a lock older than 2 minutes belongs to a save that hung or was killed.
+find "$lock_dir" -maxdepth 0 -mmin +2 -exec rmdir {} \; 2>/dev/null || true
+if ! mkdir "$lock_dir" 2>/dev/null; then
+	exit 0
+fi
+trap 'rmdir "$lock_dir"' EXIT
+
+~/.tmux/plugins/tmux-resurrect/scripts/save.sh "$@"
+# Save files are named by the second, so the next save must start in a later second.
+sleep 1

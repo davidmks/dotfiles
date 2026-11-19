@@ -46,6 +46,15 @@ else
   git clone git@github.com:davidmks/nvim-config.git "$NVIM_CONFIG"
 fi
 
+echo "==> tmux plugin manager"
+TPM_DIR=~/.tmux/plugins/tpm
+if [ -d "$TPM_DIR" ]; then
+  echo "$TPM_DIR already exists, leaving it alone"
+else
+  git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+fi
+"$TPM_DIR/bin/install_plugins"
+
 if command -v brew &>/dev/null; then
   echo "==> Installing Homebrew packages"
   brew trust davidmks/tap 2>/dev/null || true

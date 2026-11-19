@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Prints how long ago tmux-resurrect last saved, for the tmux status bar.
+set -euo pipefail
+
+resurrect_dir="$(tmux show-options -gqv @resurrect-dir)"
+resurrect_dir="${resurrect_dir/#\~/$HOME}"
+# tmux-resurrect keeps `last` on the old file when a save finds no changes, but
+# tmux-claude-save-sessions rewrites this file after every save.
+last_save="$resurrect_dir/claude_sessions"
+
+if [[ ! -e "$last_save" ]]; then
+	echo "not saved"
+	exit 0
+fi
+minutes=$((($(date +%s) - $(stat -f %m "$last_save")) / 60))
+if ((minutes == 0)); then
+	echo "saved just now"
+else
+	echo "saved ${minutes}m ago"
+fi
