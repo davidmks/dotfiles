@@ -33,9 +33,7 @@
       "Bash(gh pr review*)"
     ],
     "ask": [
-      "Bash(gh pr comment*)",
-      "Bash(gh api *comments*)",
-      "Bash(gh api graphql*)"
+      "Bash(gh pr comment*)"
     ]
   },
   "hooks": {
