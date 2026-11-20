@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # After each tmux-resurrect save, writes "session, window, pane, Claude conversation ID"
-# per pane, so tmux-claude-resume can reopen the same conversation.
+# per pane, so tmux-claude-restore can reopen the same conversation.
 # Pane IDs (%12) change after a restore, so the key uses names and indexes.
 set -euo pipefail
 
@@ -10,12 +10,13 @@ sessions_file="$resurrect_dir/claude_sessions"
 
 # Fallback for panes the agent-state hook hasn't seen yet: Claude Code writes
 # ~/.claude/sessions/<pid>.json for each running process. The format is not documented.
+# Claude is either the pane's own process or a child of the pane's shell.
 session_id_from_claude_file() {
-	local shell_pid="$1" child_pid
-	for child_pid in $(pgrep -P "$shell_pid"); do
-		if [[ -f "$HOME/.claude/sessions/$child_pid.json" ]]; then
+	local pane_pid="$1" pid
+	for pid in "$pane_pid" $(pgrep -P "$pane_pid"); do
+		if [[ -f "$HOME/.claude/sessions/$pid.json" ]]; then
 			# Claude may be rewriting the file; skip this pane rather than the whole save.
-			jq -r '.sessionId // empty' "$HOME/.claude/sessions/$child_pid.json" 2>/dev/null || true
+			jq -r '.sessionId // empty' "$HOME/.claude/sessions/$pid.json" 2>/dev/null || true
 			return 0
 		fi
 	done
@@ -23,9 +24,9 @@ session_id_from_claude_file() {
 
 mkdir -p "$resurrect_dir"
 tmux list-panes -a -F "#{session_name}	#{window_index}	#{pane_index}	#{pane_pid}	#{@claude_session_id}" |
-	while IFS=$'\t' read -r session window pane shell_pid session_id; do
+	while IFS=$'\t' read -r session window pane pane_pid session_id; do
 		if [[ -z "$session_id" ]]; then
-			session_id="$(session_id_from_claude_file "$shell_pid")"
+			session_id="$(session_id_from_claude_file "$pane_pid")"
 		fi
 		if [[ -n "$session_id" ]]; then
 			printf '%s\t%s\t%s\t%s\n' "$session" "$window" "$pane" "$session_id"
