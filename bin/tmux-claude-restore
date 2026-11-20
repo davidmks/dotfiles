@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# tmux-resurrect runs this after a restore. It reopens each saved Claude conversation in
+# its own pane. The list comes from tmux-claude-save-sessions, not from resurrect's process
+# list: resurrect saves the pane's child processes, which misses Claude when Claude is the
+# pane's own process, and then it saves Claude's MCP servers instead.
+set -euo pipefail
+
+resurrect_dir="$(tmux show-options -gqv @resurrect-dir)"
+resurrect_dir="${resurrect_dir/#\~/$HOME}"
+sessions_file="$resurrect_dir/claude_sessions"
+if [[ ! -f "$sessions_file" ]]; then
+	exit 0
+fi
+
+while IFS=$'\t' read -r session window pane session_id; do
+	target="$session:$window.$pane"
+	command="$(tmux display-message -p -t "$target" '#{pane_current_command}' 2>/dev/null)" || continue
+	# Only start Claude in an idle shell, so a restore into a running server can't type into a live program.
+	case "$command" in
+	zsh | bash | sh | fish) ;;
+	*) continue ;;
+	esac
+	# The agent-state hook has no SessionStart event, so set the ID here for saves before the first message.
+	tmux set-option -p -t "$target" @claude_session_id "$session_id"
+	tmux send-keys -t "$target" "claude --resume $session_id" Enter
+done <"$sessions_file"
